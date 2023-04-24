@@ -2,30 +2,48 @@
 #login and sing up created..
 #still need API, database, ..
 
-from flask import Flask, render_template, request, redirect, session
+#from flask import Flask, render_template, request, redirect, session
+import sqlite3
+import os
+
+from flask import Flask
+import requests
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
- 
-users = {}
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
+#db = SQLAlchemy(app)
+
+
+#class User(db.Model):
+   # id = db.Column(db.Integer, primary_key=True)
+   # username = db.Column(db.String(80), nullable=False)
+    #message = db.Column(db.String(150), nullable=False)
+    #likes = db.Column(db.Integer, default=0)
+    #dislikes = db.Column(db.Integer, default=0)
+
 
 @app.route('/')
 def home():
     return redirect('/login')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-#here is so the user can make their OWN user name y password 
-#sign up html the only affected from this update!
-        if username in users:
+
+        if User.query.filter_by(username=username).first():
             error = "Oops username already exists.."
             return render_template('signup.html', error=error)
-        
-        users[username] = password
-    
+
+        new_user = User(username=username, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
         session['username'] = username
         return redirect('/dashboard')
     else:
@@ -37,25 +55,62 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-#wrong pass word or email.. retry 
-        if username not in users or users[username] != password:
+
+        user = user.query.filter_by(username=username).first()
+
+        if not User or user.password != password:
             error = "Sorry, Incorrect username or password."
             return render_template('login.html', error=error)
+
         session['username'] = username
         return redirect('/dashboard')
     else:
         return render_template('login.html')
 
+
 @app.route('/dashboard')
 def dashboard():
-#render bk to dashboard..
     if 'username' in session:
-        return render_template('dashboard.html', username=session['username'])
+        comments = Comment.query.all()
+        return render_template('dashboard.html', username=session['username'], comments=comments)
     else:
         return redirect('/login')
 
+
+@app.route('/add_comment', methods=['POST'])
+def add_comment():
+    if 'username' in session:
+        new_comment = Comment(username=session['username'], message=request.form['message'])
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect('/dashboard')
+    else:
+        return redirect('/login')
+
+
+@app.route('/like_comment', methods=['POST'])
+def like_comment():
+    if 'username' in session:
+        comment_id = request.form['id']
+        action = request.form['action']
+
+        comment = Comment.query.get(comment_id)
+
+        if action == 'like':
+            comment.likes += 1
+        else:
+            comment.dislikes += 1
+
+        db.session.commit()
+
+        return redirect('/dashboard')
+    else:
+        return redirect('/login')
+
+
 @app.route('/logout')
 def logout():
-#logout option after logged on on dashboard page
     session.pop('username', None)
     return redirect('/login')
+
+app.run()

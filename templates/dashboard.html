@@ -27,12 +27,67 @@
             border-radius: 5px;
             margin-top: 50px;
         }
+        .comments {
+            margin-top: 50px;
+            text-align: left;
+        }
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+        .comment .user {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .comment .content {
+            margin-bottom: 10px;
+        }
+        .comment .likes {
+            font-size: 14px;
+        }
+        .like-btn {
+            background-color: yellow;
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to scripture fortune {{ username }}!</h1>
     <p>You have successfully logged in.</p>
-    <p>Your faith is what makes you, You.  Let the bible speak to you..</p>
+    <p>Your faith is what makes you, You. Let the Bible speak to you.</p>
     <a href="/logout" class="logout-btn">Logout</a>
+php
+Copy code
+<div class="comments">
+    <h2>Comments</h2>
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="user">{{ comment.user }}</div>
+                <div class="content">{{ comment.content }}</div>
+                <div class="likes">
+                    Likes: {{ comment.likes }}
+                    <a href="/like/{{ comment.id }}" class="like-btn">Like</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+
+    <form action="/comment" method="post">
+        <label for="content">Add a comment:</label><br>
+        <textarea id="content" name="content" required></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 </body>
 </html>
