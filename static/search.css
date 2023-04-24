@@ -1,0 +1,41 @@
+h1{
+    font-size: xx-large;
+    color: rgb(154, 107, 158);
+    border: 5px solid rgb(218, 111, 228);
+    align-self: center;
+    padding: 30px;
+    margin: 20px;
+    background-color: blueviolet;
+    text-align: center;
+    
+}
+body{
+    background-color: rgb(196, 187, 234);
+    text-align: center;
+    
+}
+form{
+    padding-block-start: 5%;
+    font-size: 20px;
+}
+p{
+    font-size: 20px;
+    font-family: 'Lucida Sans';
+}
+button{
+    background-color: cornflowerblue;
+    font-size: medium;
+   
+}
+input{
+    background-color: rgb(199, 162, 234);
+    size: 5px;
+    inline-size: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+}

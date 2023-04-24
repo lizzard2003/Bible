@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href='static/results.css'>
+</head>
+<body>
+    
+    <h1>Search Results</h1>
+    
+    <h2> The word "{{query}}" was found here : </h2>
+        {% for i in each_entry %}
+        
+        <ul><h4>Book : {{i['bibleId']}}</h4>
+        <h4>Chapter : {{i['chapterId']}}</h4>
+        <h4>Text with word :{{i['text']}}</h4></ul>
+        <break></break>
+        
+        {% endfor %}
+ 
+
+</body>
+</html>

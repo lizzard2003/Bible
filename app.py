@@ -2,19 +2,13 @@
 #login and sing up created..
 #still need API, database, ..
 
-#from flask import Flask, render_template, request, redirect, session
-import sqlite3
-import os
+from flask import Flask, render_template, request, redirect, session
 
-from flask import Flask
-import requests
-from flask_sqlalchemy import SQLAlchemy
-
-
+load_dotenv(find_dotenv())
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
-#db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
+db = SQLAlchemy(app)
 
 
 #class User(db.Model):
@@ -112,5 +106,3 @@ def like_comment():
 def logout():
     session.pop('username', None)
     return redirect('/login')
-
-app.run()

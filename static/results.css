@@ -1,0 +1,24 @@
+h1{
+    font-size: 50px;
+    color: rgb(154, 107, 158);
+    border: 5px solid rgb(218, 111, 228);
+    align-self: center;
+    padding: 50px;
+    margin: 20px;
+    background-color: blueviolet;
+    text-align: center;
+    
+}
+body{
+    background-color: rgb(196, 187, 234);
+    align-content: center;
+}
+ul{
+    border: 10px solid rgb(152, 222, 237);
+    padding-block-start: 10px;
+    padding-inline-start: 5%;
+    font-family: Georgia;
+    font-size: 18px;
+    background-color: lightgrey;
+    
+  }
