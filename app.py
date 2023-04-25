@@ -2,16 +2,12 @@
 #login and sing up created..
 #still need API, database, ..
 
-<<<<<<< HEAD
 import json
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, jsonify, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import requests
-=======
-from flask import Flask, render_template, request, redirect, session
->>>>>>> origin/main
 
 load_dotenv(find_dotenv())
 app = Flask(__name__)
@@ -19,7 +15,6 @@ app.secret_key = "my_secret_key"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
 db = SQLAlchemy(app)
 
-<<<<<<< HEAD
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
@@ -28,7 +23,7 @@ class User(db.Model):
     dislikes = db.Column(db.Integer, default=0)
  
 users = {}
-=======
+
 
 #class User(db.Model):
    # id = db.Column(db.Integer, primary_key=True)
@@ -37,7 +32,7 @@ users = {}
     #likes = db.Column(db.Integer, default=0)
     #dislikes = db.Column(db.Integer, default=0)
 
->>>>>>> origin/main
+
 
 @app.route('/')
 def home():
@@ -126,3 +121,35 @@ def like_comment():
 def logout():
     session.pop('username', None)
     return redirect('/login')
+
+@app.route("/search")
+def search():
+    query = request.args.get('query')
+    if not query:
+        return jsonify(error="Missing search query")
+    each_entry.clear()
+    results = search_scripture(query)
+
+
+    return render_template("results.html", each_entry=each_entry, query=query)
+@app.route("/form")
+def form():
+    return render_template("search.html")
+
+each_entry = []
+
+def search_scripture(query):
+    url = f"https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/search?query={query}&sort=relevance"
+    headers = {'api-key': getenv("BIBLE_API")}
+    response = requests.request("GET", url, headers=headers)
+    response_json = json.loads(response.text)
+    bible_data = response_json['data']['verses']
+    #each_entry = [] # create list that has a 3 Id bible and so on 
+    for i in range(10):
+
+        bibleId = bible_data[i]['bookId']
+        chapterId = bible_data[i]['chapterId']
+        text = bible_data[i]['text']
+        each_entry.append({'bibleId': bibleId, 'chapterId': chapterId, 'text': text})
+
+app.run(debug=True, port=5003)
