@@ -1,16 +1,16 @@
 h1{
     font-size: xx-large;
-    color: rgb(154, 107, 158);
-    border: 5px solid rgb(218, 111, 228);
+    color: rgb(1, 1, 1);
+    border: 5px solid rgb(4, 4, 4);
     align-self: center;
     padding: 30px;
     margin: 20px;
-    background-color: blueviolet;
+    background-color: rgb(222, 144, 70);
     text-align: center;
     
 }
 body{
-    background-color: rgb(196, 187, 234);
+    background-color: rgb(146, 146, 139);
     text-align: center;
     
 }
@@ -28,13 +28,13 @@ button{
    
 }
 input{
-    background-color: rgb(199, 162, 234);
+    background-color: rgb(237, 191, 135);
     size: 5px;
     inline-size: 25%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #080808;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 18px;

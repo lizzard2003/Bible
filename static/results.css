@@ -1,24 +1,24 @@
 h1{
     font-size: 50px;
-    color: rgb(154, 107, 158);
-    border: 5px solid rgb(218, 111, 228);
+    color: rgb(2, 2, 2);
+    border: 5px solid rgb(7, 7, 7);
     align-self: center;
     padding: 50px;
     margin: 20px;
-    background-color: blueviolet;
+    background-color: rgb(222, 144, 70);
     text-align: center;
     
 }
 body{
-    background-color: rgb(196, 187, 234);
+    background-color: rgb(146, 146, 139);
     align-content: center;
 }
 ul{
-    border: 10px solid rgb(152, 222, 237);
+    border: 10px solid rgb(5, 6, 6);
     padding-block-start: 10px;
     padding-inline-start: 5%;
     font-family: Georgia;
     font-size: 18px;
-    background-color: lightgrey;
+    background-color: rgb(222, 144, 70);
     
   }

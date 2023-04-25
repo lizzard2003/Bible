@@ -6,11 +6,21 @@ import json
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, jsonify, render_template, request, redirect, session
+from flask_sqlalchemy import SQLAlchemy
 import requests
 
 load_dotenv(find_dotenv())
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), nullable=False)
+    message = db.Column(db.String(150), nullable=False)
+    likes = db.Column(db.Integer, default=0)
+    dislikes = db.Column(db.Integer, default=0)
  
 users = {}
 
@@ -47,7 +57,7 @@ def login():
             error = "Sorry, Incorrect username or password."
             return render_template('login.html', error=error)
         session['username'] = username
-        return redirect('/dashboard')
+        return redirect('/form')
     else:
         return render_template('login.html')
 
