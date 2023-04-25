@@ -3,6 +3,7 @@
 #still need API, database, ..
 
 import json
+import os
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, jsonify, render_template, request, redirect, session
@@ -13,7 +14,7 @@ import requests
 load_dotenv(find_dotenv())
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///comments.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -106,5 +107,5 @@ def search_scripture(query):
         text = bible_data[i]['text']
         each_entry.append({'bibleId': bibleId, 'chapterId': chapterId, 'text': text})
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+# if __name__ == "__main__":
+#     app.run(debug=True)
